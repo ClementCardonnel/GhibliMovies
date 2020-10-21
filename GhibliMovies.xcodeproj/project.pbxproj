@@ -13,8 +13,12 @@
 		41A5EFB42540650E00D48797 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41A5EFB22540650E00D48797 /* Main.storyboard */; };
 		41A5EFB62540651000D48797 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41A5EFB52540651000D48797 /* Assets.xcassets */; };
 		41A5EFB92540651000D48797 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41A5EFB72540651000D48797 /* LaunchScreen.storyboard */; };
-		41A5EFC42540651000D48797 /* GhibliMoviesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5EFC32540651000D48797 /* GhibliMoviesTests.swift */; };
+		41A5EFC42540651000D48797 /* FilmViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5EFC32540651000D48797 /* FilmViewModelTests.swift */; };
 		41A5EFCF2540651000D48797 /* GhibliMoviesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5EFCE2540651000D48797 /* GhibliMoviesUITests.swift */; };
+		41A5EFE1254065F900D48797 /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5EFE0254065F900D48797 /* Film.swift */; };
+		41A5EFE7254066A100D48797 /* FilmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5EFE6254066A100D48797 /* FilmViewModel.swift */; };
+		41A5EFF6254069B100D48797 /* GhibliError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5EFF5254069B100D48797 /* GhibliError.swift */; };
+		41A5EFFE25407A8D00D48797 /* FilmCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5EFFD25407A8D00D48797 /* FilmCodableTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,11 +48,15 @@
 		41A5EFB82540651000D48797 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		41A5EFBA2540651000D48797 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41A5EFBF2540651000D48797 /* GhibliMoviesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhibliMoviesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		41A5EFC32540651000D48797 /* GhibliMoviesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhibliMoviesTests.swift; sourceTree = "<group>"; };
+		41A5EFC32540651000D48797 /* FilmViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmViewModelTests.swift; sourceTree = "<group>"; };
 		41A5EFC52540651000D48797 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41A5EFCA2540651000D48797 /* GhibliMoviesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhibliMoviesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41A5EFCE2540651000D48797 /* GhibliMoviesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhibliMoviesUITests.swift; sourceTree = "<group>"; };
 		41A5EFD02540651000D48797 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		41A5EFE0254065F900D48797 /* Film.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Film.swift; sourceTree = "<group>"; };
+		41A5EFE6254066A100D48797 /* FilmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmViewModel.swift; sourceTree = "<group>"; };
+		41A5EFF5254069B100D48797 /* GhibliError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhibliError.swift; sourceTree = "<group>"; };
+		41A5EFFD25407A8D00D48797 /* FilmCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCodableTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +109,10 @@
 			children = (
 				41A5EFAC2540650E00D48797 /* AppDelegate.swift */,
 				41A5EFAE2540650E00D48797 /* SceneDelegate.swift */,
+				41A5EFDF254065C400D48797 /* Model */,
+				41A5EFE52540668300D48797 /* View Model */,
 				41A5EFB02540650E00D48797 /* ViewController.swift */,
+				41A5EFF42540698500D48797 /* Helpers & Extensions */,
 				41A5EFB22540650E00D48797 /* Main.storyboard */,
 				41A5EFB52540651000D48797 /* Assets.xcassets */,
 				41A5EFB72540651000D48797 /* LaunchScreen.storyboard */,
@@ -113,7 +124,8 @@
 		41A5EFC22540651000D48797 /* GhibliMoviesTests */ = {
 			isa = PBXGroup;
 			children = (
-				41A5EFC32540651000D48797 /* GhibliMoviesTests.swift */,
+				41A5EFFD25407A8D00D48797 /* FilmCodableTests.swift */,
+				41A5EFC32540651000D48797 /* FilmViewModelTests.swift */,
 				41A5EFC52540651000D48797 /* Info.plist */,
 			);
 			path = GhibliMoviesTests;
@@ -126,6 +138,30 @@
 				41A5EFD02540651000D48797 /* Info.plist */,
 			);
 			path = GhibliMoviesUITests;
+			sourceTree = "<group>";
+		};
+		41A5EFDF254065C400D48797 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				41A5EFE0254065F900D48797 /* Film.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		41A5EFE52540668300D48797 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				41A5EFE6254066A100D48797 /* FilmViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		41A5EFF42540698500D48797 /* Helpers & Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				41A5EFF5254069B100D48797 /* GhibliError.swift */,
+			);
+			path = "Helpers & Extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +295,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				41A5EFB12540650E00D48797 /* ViewController.swift in Sources */,
+				41A5EFF6254069B100D48797 /* GhibliError.swift in Sources */,
+				41A5EFE1254065F900D48797 /* Film.swift in Sources */,
 				41A5EFAD2540650E00D48797 /* AppDelegate.swift in Sources */,
 				41A5EFAF2540650E00D48797 /* SceneDelegate.swift in Sources */,
+				41A5EFE7254066A100D48797 /* FilmViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +307,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41A5EFC42540651000D48797 /* GhibliMoviesTests.swift in Sources */,
+				41A5EFFE25407A8D00D48797 /* FilmCodableTests.swift in Sources */,
+				41A5EFC42540651000D48797 /* FilmViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
