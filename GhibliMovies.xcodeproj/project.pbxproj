@@ -59,6 +59,7 @@
 		41A5EFF5254069B100D48797 /* GhibliError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhibliError.swift; sourceTree = "<group>"; };
 		41A5EFFD25407A8D00D48797 /* FilmCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCodableTests.swift; sourceTree = "<group>"; };
 		41A5F00E2540850C00D48797 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		41A5F0132540856400D48797 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +110,7 @@
 		41A5EFAB2540650E00D48797 /* GhibliMovies */ = {
 			isa = PBXGroup;
 			children = (
+				41A5F0132540856400D48797 /* README.md */,
 				41A5F00E2540850C00D48797 /* LICENSE */,
 				41A5EFAC2540650E00D48797 /* AppDelegate.swift */,
 				41A5EFAE2540650E00D48797 /* SceneDelegate.swift */,
