@@ -19,6 +19,7 @@
 		41A5EFE7254066A100D48797 /* FilmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5EFE6254066A100D48797 /* FilmViewModel.swift */; };
 		41A5EFF6254069B100D48797 /* GhibliError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5EFF5254069B100D48797 /* GhibliError.swift */; };
 		41A5EFFE25407A8D00D48797 /* FilmCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5EFFD25407A8D00D48797 /* FilmCodableTests.swift */; };
+		41A5F00F2540850C00D48797 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 41A5F00E2540850C00D48797 /* LICENSE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		41A5EFE6254066A100D48797 /* FilmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmViewModel.swift; sourceTree = "<group>"; };
 		41A5EFF5254069B100D48797 /* GhibliError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhibliError.swift; sourceTree = "<group>"; };
 		41A5EFFD25407A8D00D48797 /* FilmCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCodableTests.swift; sourceTree = "<group>"; };
+		41A5F00E2540850C00D48797 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		41A5EFAB2540650E00D48797 /* GhibliMovies */ = {
 			isa = PBXGroup;
 			children = (
+				41A5F00E2540850C00D48797 /* LICENSE */,
 				41A5EFAC2540650E00D48797 /* AppDelegate.swift */,
 				41A5EFAE2540650E00D48797 /* SceneDelegate.swift */,
 				41A5EFDF254065C400D48797 /* Model */,
@@ -269,6 +272,7 @@
 			files = (
 				41A5EFB92540651000D48797 /* LaunchScreen.storyboard in Resources */,
 				41A5EFB62540651000D48797 /* Assets.xcassets in Resources */,
+				41A5F00F2540850C00D48797 /* LICENSE in Resources */,
 				41A5EFB42540650E00D48797 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
