@@ -8,6 +8,12 @@
 import Foundation
 import Combine
 
+/**
+ A view model for a view that needs to display all the films.
+ 
+ This view model handle the network fetching from the API. It report the result with either the `films` property or the `error` property.
+ Both properties are @Published so you can subscribe to them and handle their outputs individually.
+ */
 final class FilmViewModel: ObservableObject {
     
     // MARK: Public Properties
@@ -18,6 +24,7 @@ final class FilmViewModel: ObservableObject {
     
     // MARK: Private Properties
         
+    /// The network request as a cancellable
     private var cancellableDataTask: AnyCancellable?
     
     
@@ -50,7 +57,7 @@ final class FilmViewModel: ObservableObject {
          so that URLSessions uses local cache
          */
         let configuration = URLSessionConfiguration.default
-        configuration.requestCachePolicy = .useProtocolCachePolicy
+        configuration.requestCachePolicy = .returnCacheDataElseLoad
         
         // URLSession data task publisher
         // We save the task in an AnyCancellable property
@@ -96,6 +103,7 @@ private extension FilmViewModel {
         
         static let filmUrlAddition: String = "films"
         
+        /// Fields that we chose to include. All the others are excluded and won't be returned in the response.
         static let includedFields = "id,title,description,director,producer,release_date,rt_score,people,url"
         
     }

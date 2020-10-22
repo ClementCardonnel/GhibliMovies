@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1vB-L3-VmH">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Detail View Controller-->
+        <scene sceneID="ec3-mw-ZOf">
+            <objects>
+                <viewController id="bDW-xM-c7t" customClass="DetailViewController" customModule="GhibliMovies" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sbd-hc-lYn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="El2-Gt-e5j"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="PNn-6B-Oo2"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RUM-Xu-PXk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1634.7826086956522" y="703.79464285714278"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ejQ-Yr-kne">
+            <objects>
+                <navigationController id="WRf-Yt-0gX" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="MgN-Cy-hoj">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="FUd-3m-H9z" kind="relationship" relationship="rootViewController" id="iuh-yD-P09"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Uf-ng-aa5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="726" y="58"/>
+        </scene>
+        <!--Movies View Controller-->
+        <scene sceneID="aZF-cE-h7n">
+            <objects>
+                <viewController id="FUd-3m-H9z" customClass="MoviesViewController" customModule="GhibliMovies" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bfI-mn-6El">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="TEJ-xX-cb2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="0NE-X2-Jr1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TVv-6K-gHT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1458" y="58"/>
+        </scene>
+        <!--Split View Controller-->
+        <scene sceneID="6Yt-5H-nvg">
+            <objects>
+                <splitViewController allowDoubleColumnStyle="YES" preferredDisplayMode="beside" presentsWithGesture="NO" id="1vB-L3-VmH" customClass="SplitViewController" customModule="GhibliMovies" customModuleProvider="target" sceneMemberID="viewController">
+                    <connections>
+                        <segue destination="WRf-Yt-0gX" kind="relationship" relationship="masterViewController" id="PLm-qV-ooW"/>
+                        <segue destination="kdi-sU-iaO" kind="relationship" relationship="detailViewController" id="k4a-B4-LG0"/>
+                    </connections>
+                </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NkM-kV-UNy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-165" y="362"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xhb-Dq-SOQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kdi-sU-iaO" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9fP-Jw-pBP">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bDW-xM-c7t" kind="relationship" relationship="rootViewController" id="WF5-Fz-tl2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wno-sn-wPc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="724.63768115942037" y="703.79464285714278"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
