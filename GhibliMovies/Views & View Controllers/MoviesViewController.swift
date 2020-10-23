@@ -82,7 +82,8 @@ final class MoviesViewController: UIViewController {
         // And subscribe to our view model's various outputs
         viewModel.$films
             .sink(receiveValue: { [weak self] films in
-                self?.performQuery(on: films)
+                guard let self = self else { return }
+                self.performQuery(on: films, onlyShowFavorites: self.shouldOnlyShowFavorites)
             })
             .store(in: &subscriptions)
         
@@ -167,7 +168,7 @@ private extension MoviesViewController {
     }
     
     /// Update the datasource to show the films
-    func performQuery(on films: [Film], onlyShowFavorites: Bool = false) {
+    func performQuery(on films: [Film], onlyShowFavorites: Bool) {
         let queryFilms: [Film]
         if onlyShowFavorites {
             queryFilms = films.filter({ $0.isFavorite })
