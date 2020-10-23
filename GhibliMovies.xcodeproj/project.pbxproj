@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		411B04982542CBF400FE3131 /* UIImage+Blurred.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411B04972542CBF400FE3131 /* UIImage+Blurred.swift */; };
 		41345FF225422D1B002A4926 /* BadgeSupplementrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41345FF125422D1B002A4926 /* BadgeSupplementrayView.swift */; };
 		415A21AE2540887500236BA8 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415A21AD2540887500236BA8 /* MovieCell.swift */; };
 		415A21C425408AAC00236BA8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415A21C625408AAC00236BA8 /* Localizable.strings */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		411B04972542CBF400FE3131 /* UIImage+Blurred.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Blurred.swift"; sourceTree = "<group>"; };
 		41345FF125422D1B002A4926 /* BadgeSupplementrayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeSupplementrayView.swift; sourceTree = "<group>"; };
 		415A21AD2540887500236BA8 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		415A21C525408AAC00236BA8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				41A5EFF5254069B100D48797 /* GhibliError.swift */,
 				415A21CA25408AC700236BA8 /* String+Localized.swift */,
+				411B04972542CBF400FE3131 /* UIImage+Blurred.swift */,
 			);
 			path = "Helpers & Extensions";
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				418E8EEF25418E2300C409E6 /* SplitViewController.swift in Sources */,
 				41A5EFE7254066A100D48797 /* FilmViewModel.swift in Sources */,
 				41345FF225422D1B002A4926 /* BadgeSupplementrayView.swift in Sources */,
+				411B04982542CBF400FE3131 /* UIImage+Blurred.swift in Sources */,
 				418E8EF42541B40000C409E6 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

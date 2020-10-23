@@ -13,26 +13,67 @@ import Combine
  */
 class DetailViewController: UIViewController {
     
+    // MARK: Public Properties
+    
     var film: Film? {
         didSet {
-            title = film?.title
-            updateFavoriteButton()
+            guard isViewLoaded else { return }
+            
+            if let film = film {
+                updateUI(with: film)
+            }
         }
     }
     
     /// This handler will be called when the user taps the favorite button of this view controller
     var onFavoriteToggleHandler: FilmHandler?
     
+    // MARK: Private Properties
+    
+    @IBOutlet private weak var backgroundImageView: UIImageView!
+    
+    @IBOutlet private weak var coverImageView: UIImageView!
+    
+    @IBOutlet private weak var titleLabel: UILabel!
+    
+    @IBOutlet private weak var releaseDateLabel: UILabel!
+    
+    @IBOutlet private weak var synopsisLabel: UILabel!
+    
+    @IBOutlet private weak var producerLabel: UILabel!
+    
+    @IBOutlet private weak var directorLabel: UILabel!
+    
     private var subscriptions = Set<AnyCancellable>()
     
     private lazy var favoriteButton = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: #selector(onFavoriteButtonTap))
     
     
+    
+    // MARK: Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = favoriteButton
+        
+        if let film = film {
+            updateUI(with: film)
+        }
+    }
+    
+    private func updateUI(with film: Film) {
+        title = film.title
+        
+        backgroundImageView.image = film.cover?.blurred()
+        coverImageView.image = film.cover
+        titleLabel.text = film.title
+        releaseDateLabel.text = "\(film.releaseDate)"
+        synopsisLabel.text = film.description
+        producerLabel.text = film.producer
+        directorLabel.text = film.director
+        
+        updateFavoriteButton()
     }
     
     private func updateFavoriteButton() {
@@ -48,6 +89,8 @@ class DetailViewController: UIViewController {
     }
     
     
+    
+    // MARK: User Interaction
     
     @objc private func onFavoriteButtonTap() {
         if let film = film {

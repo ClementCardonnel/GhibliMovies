@@ -225,11 +225,11 @@ private extension MoviesViewController {
 extension MoviesViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // Update the detail screen
-        viewModel.selectedFilmIndex = indexPath.row
-        
         // Ask the SplitVC to show the detail screen
         splitViewController?.show(.secondary)
+        
+        // Update the detail screen
+        viewModel.selectedFilmIndex = indexPath.row
         
         // We check the trait collection to deselect because we want to maintain the selection UI in regular sizes.
         if splitViewController?.traitCollection.horizontalSizeClass == .compact {

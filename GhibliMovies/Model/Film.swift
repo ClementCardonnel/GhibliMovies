@@ -101,9 +101,9 @@ extension Film: Decodable {
             self.init(
                 id: id,
                 title: title,
-                description: director,
-                director: producer,
-                producer: description,
+                description: description,
+                director: director,
+                producer: producer,
                 releaseDate: releaseDate,
                 score: score,
                 url: url)

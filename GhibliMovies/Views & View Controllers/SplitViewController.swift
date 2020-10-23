@@ -24,7 +24,7 @@ class SplitViewController: UISplitViewController, UISplitViewControllerDelegate 
     
     /// Our Detail view controller. Either on the right side on iPad, or the second screen on iPhone
     private var detailVC: DetailViewController? {
-        (viewController(for: .secondary) as? UINavigationController)?.viewControllers.first as? DetailViewController
+        viewController(for: .secondary) as? DetailViewController
     }
     
     override func viewDidLoad() {
@@ -40,9 +40,9 @@ class SplitViewController: UISplitViewController, UISplitViewControllerDelegate 
         
         Publishers.CombineLatest(viewModel.$films, viewModel.$selectedFilmIndex)
             .sink(receiveValue: { [weak self] films, index in
-                if let index = index {
-                    self?.detailVC?.film = films[index]
-                }
+                guard films.count > index else { return }
+                
+                self?.detailVC?.film = films[index]
             })
             .store(in: &subscriptions)
         
