@@ -91,6 +91,9 @@ final class FilmViewModel: ObservableObject {
                         // Update our subscribers with an error
                         self?.error = error
                     }
+                    
+                    self?.cancellableDataTask?.cancel()
+                    self?.cancellableDataTask = nil
                 },
                 receiveValue: { [weak self] (films) in
                     // Notify our subscribers we've got films!

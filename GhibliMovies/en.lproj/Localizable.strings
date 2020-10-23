@@ -7,3 +7,8 @@
 */
 
 "MOVIES_SECTION_TITLE" = "Ghibli Movies";
+
+"NETWORK_ERROR_TITLE" = "Network error";
+"NETWORK_ERROR_DESCRIPTION" = "A network error occured and the operation couldn't be completed.";
+"NETWORK_ERROR_RETRY" = "Retry";
+"NETWORK_ERROR_DONE" = "Ok";

@@ -81,13 +81,34 @@ final class MoviesViewController: UIViewController {
             .store(in: &subscriptions)
         
         viewModel.$error
-            .sink { (error) in
-                // TODO: Handle error, show popup, do things!
+            .sink { [weak self] (error) in
+                if let _ = error {
+                    self?.showErrorAlert()
+                }
             }
             .store(in: &subscriptions)
         
         // Once everything is ready, we can ask it to fetch new films.
         viewModel.fetchNewFilms()
+    }
+    
+}
+
+
+
+// MARK: - Error Handling
+
+extension MoviesViewController {
+    
+    private func showErrorAlert() {
+        let alert = UIAlertController(title: "NETWORK_ERROR_TITLE".localized, message: "NETWORK_ERROR_DESCRIPTION".localized, preferredStyle: .alert)
+        let retryAction = UIAlertAction(title: "NETWORK_ERROR_RETRY".localized, style: .default) { [weak self] (_) in
+            self?.viewModel.fetchNewFilms()
+        }
+        let doneAction = UIAlertAction(title: "NETWORK_ERROR_DONE".localized, style: .default) { (_) in }
+        alert.addAction(retryAction)
+        alert.addAction(doneAction)
+        present(alert, animated: true, completion: nil)
     }
     
 }
