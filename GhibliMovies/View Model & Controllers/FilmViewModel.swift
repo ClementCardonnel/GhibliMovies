@@ -21,7 +21,7 @@ final class FilmViewModel: ObservableObject {
     @Published var films = [Film]()
     
     /// The index of the currently selected film
-    @Published var selectedFilmIndex: Int = 0
+    @Published var selectedFilmIndex: Int?
     
     @Published var error: Error?
     

@@ -40,9 +40,11 @@ class SplitViewController: UISplitViewController, UISplitViewControllerDelegate 
         
         Publishers.CombineLatest(viewModel.$films, viewModel.$selectedFilmIndex)
             .sink(receiveValue: { [weak self] films, index in
-                guard films.count > index else { return }
-                
-                self?.detailVC?.film = films[index]
+                if let index = index {
+                    guard films.count > index else { return }
+                    
+                    self?.detailVC?.film = films[index]
+                }
             })
             .store(in: &subscriptions)
         

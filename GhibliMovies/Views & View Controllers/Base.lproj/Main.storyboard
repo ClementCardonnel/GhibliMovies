@@ -142,6 +142,7 @@
                         <outlet property="directorLabel" destination="e4P-mm-3GX" id="wYV-hc-Hwz"/>
                         <outlet property="producerLabel" destination="S16-gB-yMm" id="Eko-Oc-etC"/>
                         <outlet property="releaseDateLabel" destination="XYJ-UR-LCq" id="IEd-Qo-AbA"/>
+                        <outlet property="scrollView" destination="gdp-y4-9rw" id="XcG-g1-H7n"/>
                         <outlet property="synopsisLabel" destination="vHY-1I-Y8B" id="lhu-X6-PQo"/>
                         <outlet property="titleLabel" destination="f67-7T-qFE" id="0NS-sx-37i"/>
                     </connections>

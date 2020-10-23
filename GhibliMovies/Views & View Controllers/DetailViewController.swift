@@ -32,6 +32,12 @@ class DetailViewController: UIViewController {
     
     @IBOutlet private weak var backgroundImageView: UIImageView!
     
+    @IBOutlet private weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.isHidden = true
+        }
+    }
+    
     @IBOutlet private weak var coverImageView: UIImageView!
     
     @IBOutlet private weak var titleLabel: UILabel!
@@ -63,6 +69,8 @@ class DetailViewController: UIViewController {
     }
     
     private func updateUI(with film: Film) {
+        scrollView.isHidden = false
+        
         title = film.title
         
         backgroundImageView.image = film.cover?.blurred()
