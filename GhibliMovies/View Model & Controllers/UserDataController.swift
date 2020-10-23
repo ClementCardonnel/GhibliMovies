@@ -14,7 +14,7 @@ final class UserDataController {
     
     // MARK: Properties
     
-    /// The user's favorite movies
+    /// The user's favorite movies (an in-memory representation of UserDefailts)
     private var favorites: [String: Bool]
     
     /// A serial queue to apply our changes to UserDefaults without hurting performance and without inducing concurrency issues.
@@ -40,18 +40,22 @@ final class UserDataController {
     
     /// Is a film a favorite in UserDefaults?
     func isFavorite(filmId: String) -> Bool {
-        favorites[filmId] ?? false
+        if let favoriteValue = favorites[filmId] {
+            return favoriteValue
+        } else {
+            return false
+        }
     }
     
     /// Update the UserDefaults (and notify observers)
     func updateFavorite(film: Film) {
+        // Update the local representation of UserDefaults
         favorites[film.id] = film.isFavorite
         
-        /*
-         We put `favorites` in the capture list so that it's the current state that is saved and not an eventual future one.
-         */
-        queue.async { [favorites] in
-            UserDefaults.standard.setValue(favorites, forKey: Constants.favoriteKey)
+        // Save to UserDefaults
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            UserDefaults.standard.setValue(self.favorites, forKey: Constants.favoriteKey)
         }
     }
     
