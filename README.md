@@ -2,6 +2,8 @@
 
 An iOS app that shows movies from Studio Ghibli using [GhibliAPI](https://ghibliapi.herokuapp.com/).
 
+![Ghibli Movies on iPad](https://github.com/Pomme2Poule/GhibliMovies/blob/master/presentation.png?raw=true)
+
 ## Installation
 
 Just download the .zip and run the project.
