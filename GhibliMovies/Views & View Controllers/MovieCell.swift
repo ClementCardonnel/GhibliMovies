@@ -53,11 +53,15 @@ final class MovieCell: UICollectionViewCell {
     // Update appearance upon selection by the user
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                backgroundColor = .secondarySystemBackground
-            } else {
-                backgroundColor = .systemBackground
-            }
+            UIView.animate(withDuration: Constants.Animation.duration, delay: 0, usingSpringWithDamping: Constants.Animation.damping, initialSpringVelocity: 1, options: [.allowUserInteraction]) { [weak self] in
+                guard let self = self else { return }
+                
+                if self.isSelected {
+                    self.transform = CGAffineTransform(scaleX: Constants.Animation.transformScaleFactor, y: Constants.Animation.transformScaleFactor)
+                } else {
+                    self.transform = .identity
+                }
+            } completion: { _ in }
         }
     }
     
@@ -134,6 +138,12 @@ private extension MovieCell {
         static let textSideMargin: CGFloat = 8
         static let interLabelSpacing: CGFloat = 4
         static let textToImageSpacing: CGFloat = 8
+        
+        struct Animation {
+            static let duration: TimeInterval = 1.0 / 3.0
+            static let damping: CGFloat = 2.0 / 3.0
+            static let transformScaleFactor: CGFloat = 0.95
+        }
     }
 
 }

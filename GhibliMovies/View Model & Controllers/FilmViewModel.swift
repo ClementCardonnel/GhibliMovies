@@ -20,6 +20,9 @@ final class FilmViewModel: ObservableObject {
     
     @Published var films = [Film]()
     
+    /// The index of the currently selected film
+    @Published var selectedFilmIndex: Int?
+    
     @Published var error: Error?
     
     // MARK: Private Properties
@@ -30,6 +33,13 @@ final class FilmViewModel: ObservableObject {
     
     
     // MARK: Actions
+    
+    /// Update the `films` array to set their favorite property and trigger reactive updates
+    func updateFavorite(filmId: String, isFavorite: Bool) {
+        if let index = films.firstIndex(where: { $0.id == filmId }) {
+            films[index].isFavorite = isFavorite
+        }
+    }
     
     /**
      Fetch new films from Ghibli API and updates the `films` and `error` Published properties.
@@ -84,7 +94,7 @@ final class FilmViewModel: ObservableObject {
                 },
                 receiveValue: { [weak self] (films) in
                     // Notify our subscribers we've got films!
-                    self?.films = films
+                    self?.films = films.sorted(by: { $0.releaseDate < $1.releaseDate })
                 }
             )
     }

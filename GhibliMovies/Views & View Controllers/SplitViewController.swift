@@ -6,11 +6,16 @@
 //
 
 import UIKit
+import Combine
 
 /**
  The app's main SplitViewController
  */
 class SplitViewController: UISplitViewController, UISplitViewControllerDelegate {
+    
+    private let viewModel = FilmViewModel()
+    
+    private var subscriptions =  Set<AnyCancellable>()
     
     /// Movies View Controller: either at the left column on iPad or the first screen on iPhone
     private var moviesViewController: MoviesViewController? {
@@ -31,10 +36,18 @@ class SplitViewController: UISplitViewController, UISplitViewControllerDelegate 
         // We want the master view to always be visible on iPad.
         preferredDisplayMode = UISplitViewController.DisplayMode.oneBesideSecondary
         
-        if let moviesVC = moviesViewController {
-            moviesVC.onFilmSelectedHandler = { [weak self] film in
-                self?.detailVC?.film = film
-            }
+        moviesViewController?.viewModel = viewModel
+        
+        Publishers.CombineLatest(viewModel.$films, viewModel.$selectedFilmIndex)
+            .sink(receiveValue: { [weak self] films, index in
+                if let index = index {
+                    self?.detailVC?.film = films[index]
+                }
+            })
+            .store(in: &subscriptions)
+        
+        detailVC?.onFavoriteToggleHandler = { [weak self] film in
+            self?.viewModel.updateFavorite(filmId: film.id, isFavorite: !film.isFavorite)
         }
     }
     

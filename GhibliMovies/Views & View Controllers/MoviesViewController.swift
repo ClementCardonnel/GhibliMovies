@@ -8,6 +8,9 @@
 import UIKit
 import Combine
 
+/// Handler that sends a Film
+typealias FilmHandler = ((Film) -> Void)
+
 /**
  The app's main screen. It shows a list of Ghibli Movies and let the user see more details by selecting them.
  */
@@ -17,18 +20,16 @@ final class MoviesViewController: UIViewController {
     
     static let sectionHeaderElementKind = "section-header-element-kind"
     
+    static let badgeElementKind = "badge-element-kind"
+    
     /// We only have one section.
     enum Section: CaseIterable {
         case movies
     }
     
-    /// Handler that sends a Film
-    typealias FilmHandler = ((Film) -> Void)
-    
     // MARK: Public Properties
     
-    /// Called when the user selects a film from the list
-    var onFilmSelectedHandler: FilmHandler?
+    var viewModel: FilmViewModel!
     
     // MARK: Private Properties
     
@@ -49,8 +50,6 @@ final class MoviesViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Section, Film>!
         
     private var subscriptions = Set<AnyCancellable>()
-    
-    private let viewModel = FilmViewModel()
     
     
     
@@ -110,12 +109,23 @@ private extension MoviesViewController {
             movieCell.present(film)
             return movieCell
         }
+        
+        let supplementaryRegistration = UICollectionView.SupplementaryRegistration
+        <BadgeSupplementaryView>(elementKind: BadgeSupplementaryView.reuseIdentifier) { [weak self]
+            (badgeView, string, indexPath) in
+            if let film = self?.dataSource.itemIdentifier(for: indexPath) {
+                // Show the badge only if the film is a favorite
+                badgeView.isHidden = !film.isFavorite
+            }
+        }
+        
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+            return self.collectionView.dequeueConfiguredReusableSupplementary(using: supplementaryRegistration, for: indexPath)
+        }
     }
     
     /// Update the datasource to show the films
     func performQuery(on films: [Film]) {
-        let films = films.sorted(by: { $0.releaseDate < $1.releaseDate })
-
         var snapshot = NSDiffableDataSourceSnapshot<Section, Film>()
         snapshot.appendSections([.movies])
         snapshot.appendItems(films)
@@ -130,6 +140,17 @@ private extension MoviesViewController {
 // MARK: - Layout
 
 private extension MoviesViewController {
+    
+    /// Create a badge supplementary item
+    static func badge() -> NSCollectionLayoutSupplementaryItem {
+        let badgeAnchor = NSCollectionLayoutAnchor(edges: [.top, .trailing], absoluteOffset: CGPoint(x: -4, y: 4))
+        let badgeSize = NSCollectionLayoutSize(widthDimension: .absolute(22),
+                                              heightDimension: .absolute(22))
+        return NSCollectionLayoutSupplementaryItem(
+            layoutSize: badgeSize,
+            elementKind: Self.badgeElementKind,
+            containerAnchor: badgeAnchor)
+    }
     
     func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
@@ -150,12 +171,13 @@ private extension MoviesViewController {
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                   heightDimension: .fractionalHeight(1.0))
 
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [Self.badge()])
             
             // Group
             // We divide by the number of columns because we want the images to keep the same format no matter the number of columns.
+            let threeByTwoDivisor: CGFloat = 1.5
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .fractionalWidth(1.5 / CGFloat(columns)))
+                                                   heightDimension: .fractionalWidth(threeByTwoDivisor / CGFloat(columns)))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
             group.interItemSpacing = .fixed(Constants.Layout.spacing)
             
@@ -182,24 +204,36 @@ private extension MoviesViewController {
 extension MoviesViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let film = dataSource.itemIdentifier(for: indexPath) {
-            // Update the detail screen
-            onFilmSelectedHandler?(film)
-            
-            // Ask the SplitVC to show the detail screen
-            splitViewController?.show(.secondary)
-            
-            // We check the trait collection to deselect because we want to maintain the selection UI in regular sizes.
-            if splitViewController?.traitCollection.horizontalSizeClass == .compact {
-                // Deselect to remove the selection indicator
-                collectionView.deselectItem(at: indexPath, animated: true)
-            }
+        // Update the detail screen
+        viewModel.selectedFilmIndex = indexPath.row
+        
+        // Ask the SplitVC to show the detail screen
+        splitViewController?.show(.secondary)
+        
+        // We check the trait collection to deselect because we want to maintain the selection UI in regular sizes.
+        if splitViewController?.traitCollection.horizontalSizeClass == .compact {
+            // Deselect to remove the selection indicator
+            collectionView.deselectItem(at: indexPath, animated: true)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         if let film = dataSource.itemIdentifier(for: indexPath) {
-            return UIContextMenuConfiguration.movieCell(film: film, presenter: self)
+            let favoriteAction: UIAction
+            
+            if film.isFavorite {
+                favoriteAction = UIAction(title: "Remove from Favorites", image: UIImage(systemName: "heart.slash"), handler: { [weak self] (_) in
+                    self?.viewModel.updateFavorite(filmId: film.id, isFavorite: false)
+                })
+            } else {
+                favoriteAction = UIAction(title: "Favorite", image: UIImage(systemName: "heart"), identifier: nil, handler: { [weak self] (_) in
+                    self?.viewModel.updateFavorite(filmId: film.id, isFavorite: true)
+                })
+            }
+            
+            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
+                UIMenu(title: film.title, children: [favoriteAction])
+            }
         } else {
             return nil
         }

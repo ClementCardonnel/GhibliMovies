@@ -13,6 +13,7 @@ import Foundation
  It represents a film, with all its the informations.
  */
 struct Film {
+    
     let id: String
     
     let title: String
@@ -32,6 +33,27 @@ struct Film {
 //    let people
     
     let url: URL
+    
+    var isFavorite: Bool {
+        didSet {
+            UserDataController.shared.updateFavorite(film: self)
+        }
+    }
+    
+    
+    
+    init(id: String, title: String, description: String, director: String, producer: String, releaseDate: Int, score: Int, url: URL) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.director = director
+        self.producer = producer
+        self.releaseDate = releaseDate
+        self.score = score
+        self.url = url
+        self.isFavorite = UserDataController.shared.isFavorite(filmId: id)
+    }
+    
 }
 
 
@@ -57,11 +79,11 @@ extension Film: Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         // Decode the most straightforward values
-        id = try values.decode(String.self, forKey: .id)
-        title = try values.decode(String.self, forKey: .title)
-        director = try values.decode(String.self, forKey: .director)
-        producer = try values.decode(String.self, forKey: .producer)
-        description = try values.decode(String.self, forKey: .description)
+        let id = try values.decode(String.self, forKey: .id)
+        let title = try values.decode(String.self, forKey: .title)
+        let director = try values.decode(String.self, forKey: .director)
+        let producer = try values.decode(String.self, forKey: .producer)
+        let description = try values.decode(String.self, forKey: .description)
         
         // These values first have to be casted to string…
         let stringDate = try values.decode(String.self, forKey: .releaseDate)
@@ -72,9 +94,19 @@ extension Film: Decodable {
         if let intDate = Int(stringDate),
            let intScore = Int(stringScore),
            let url = URL(string: stringUrl) {
-            releaseDate = intDate
-            score = intScore
-            self.url = url
+            let releaseDate = intDate
+            let score = intScore
+            let url = url
+            
+            self.init(
+                id: id,
+                title: title,
+                description: director,
+                director: producer,
+                producer: description,
+                releaseDate: releaseDate,
+                score: score,
+                url: url)
         } else {
             // Something went wrong during the parsing.
             throw GhibliError.failedToParseFilm
@@ -99,6 +131,7 @@ extension Film: Hashable {
         hasher.combine(releaseDate)
         hasher.combine(score)
         hasher.combine(url)
+        hasher.combine(isFavorite)
     }
 
     static func == (lhs: Film, rhs: Film) -> Bool {

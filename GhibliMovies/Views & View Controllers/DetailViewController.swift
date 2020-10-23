@@ -20,6 +20,9 @@ class DetailViewController: UIViewController {
         }
     }
     
+    /// This handler will be called when the user taps the favorite button of this view controller
+    var onFavoriteToggleHandler: FilmHandler?
+    
     private var subscriptions = Set<AnyCancellable>()
     
     private lazy var favoriteButton = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: #selector(onFavoriteButtonTap))
@@ -28,12 +31,6 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        NotificationCenter.default.publisher(for: UserDataController.onUserDataUpdated)
-            .sink { [weak self] _ in
-                self?.updateFavoriteButton()
-            }
-            .store(in: &subscriptions)
         
         navigationItem.rightBarButtonItem = favoriteButton
     }
@@ -43,7 +40,7 @@ class DetailViewController: UIViewController {
             return
         }
         
-        if UserDataController.shared.isFavorite(film) {
+        if film.isFavorite {
             favoriteButton.image = UIImage(systemName: "heart.fill")
         } else {
             favoriteButton.image = UIImage(systemName: "heart")
@@ -54,7 +51,7 @@ class DetailViewController: UIViewController {
     
     @objc private func onFavoriteButtonTap() {
         if let film = film {
-            UserDataController.shared.toggleFavorite(film)
+            onFavoriteToggleHandler?(film)
         }
     }
 

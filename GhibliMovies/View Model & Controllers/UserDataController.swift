@@ -15,7 +15,7 @@ final class UserDataController {
     // MARK: Properties
     
     /// The user's favorite movies
-    private var favorites: [String: Any]
+    private var favorites: [String: Bool]
     
     /// A serial queue to apply our changes to UserDefaults without hurting performance and without inducing concurrency issues.
     private let queue = DispatchQueue(label: "UserDataQueue", qos: .utility)
@@ -27,48 +27,25 @@ final class UserDataController {
     static let shared = UserDataController()
     
     private init() {
-        if let favorites = UserDefaults.standard.dictionary(forKey: Constants.favoriteKey) {
+        if let favorites = UserDefaults.standard.dictionary(forKey: Constants.favoriteKey) as? [String: Bool] {
             // Retrieve and set favorites from UserDefaults
             self.favorites = favorites
         } else {
             // Initialize an empty favorites dictionary
-            self.favorites = [String: Any]()
+            self.favorites = [String: Bool]()
         }
     }
     
     
     
-    /// Set a movie as favorite
-    func setAsFavorite(_ film: Film) {
-        favorites[film.id] = true
-        update()
+    /// Is a film a favorite in UserDefaults?
+    func isFavorite(filmId: String) -> Bool {
+        favorites[filmId] ?? false
     }
-    
-    /// Remove a movie from the favorites list
-    func removeFromFavorites(_ film: Film) {
-        favorites[film.id] = false
-        update()
-    }
-    
-    /// Check if an individual movie is a favorite of our user or not.
-    func isFavorite(_ film: Film) -> Bool {
-        (favorites[film.id] as? Bool) ?? false
-    }
-    
-    /// Either add or remove the movie to and from the favorites depending on its previous state
-    func toggleFavorite(_ film: Film) {
-        if isFavorite(film) {
-            removeFromFavorites(film)
-        } else {
-            setAsFavorite(film)
-        }
-    }
-    
-    
     
     /// Update the UserDefaults (and notify observers)
-    private func update() {
-        NotificationCenter.default.post(Notification(name: Self.onUserDataUpdated))
+    func updateFavorite(film: Film) {
+        favorites[film.id] = film.isFavorite
         
         /*
          We put `favorites` in the capture list so that it's the current state that is saved and not an eventual future one.
@@ -90,16 +67,5 @@ private extension UserDataController {
         /// UserDefaults keys to the favorites
         static let favoriteKey = "userFavorites"
     }
-    
-}
-
-
-
-// MARK: - Notification
-
-extension UserDataController {
-    
-    /// Called whenever UserData is updated
-    static let onUserDataUpdated = Notification.Name("onUserDataUpdated")
     
 }
