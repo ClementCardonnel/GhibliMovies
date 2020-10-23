@@ -51,6 +51,10 @@ final class MoviesViewController: UIViewController {
         
     private var subscriptions = Set<AnyCancellable>()
     
+    private lazy var filterFavoritesButton = UIBarButtonItem(image: Constants.ShowFavoritesButton.showsAllImage, style: .plain, target: self, action: #selector(onFilterFavoritesButtonTap))
+    
+    private var shouldOnlyShowFavorites: Bool = false
+    
     
     
     // MARK: Life Cycle
@@ -59,6 +63,8 @@ final class MoviesViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = "MOVIES_SECTION_TITLE".localized
+        
+        navigationItem.rightBarButtonItem = filterFavoritesButton
         
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
@@ -90,6 +96,21 @@ final class MoviesViewController: UIViewController {
         
         // Once everything is ready, we can ask it to fetch new films.
         viewModel.fetchNewFilms()
+    }
+    
+    
+    
+    // MARK: User Interaction
+    
+    @objc private func onFilterFavoritesButtonTap() {
+        // Update the state
+        shouldOnlyShowFavorites = !shouldOnlyShowFavorites
+        
+        // Update the UI
+        filterFavoritesButton.image = shouldOnlyShowFavorites
+            ? Constants.ShowFavoritesButton.showsFavoritesImage
+            : Constants.ShowFavoritesButton.showsAllImage
+        performQuery(on: viewModel.films, onlyShowFavorites: shouldOnlyShowFavorites)
     }
     
 }
@@ -146,10 +167,17 @@ private extension MoviesViewController {
     }
     
     /// Update the datasource to show the films
-    func performQuery(on films: [Film]) {
+    func performQuery(on films: [Film], onlyShowFavorites: Bool = false) {
+        let queryFilms: [Film]
+        if onlyShowFavorites {
+            queryFilms = films.filter({ $0.isFavorite })
+        } else {
+            queryFilms = films
+        }
+        
         var snapshot = NSDiffableDataSourceSnapshot<Section, Film>()
         snapshot.appendSections([.movies])
-        snapshot.appendItems(films)
+        snapshot.appendItems(queryFilms)
         
         dataSource.apply(snapshot, animatingDifferences: true)
     }
@@ -276,6 +304,11 @@ private extension MoviesViewController {
             static let groupHeight: CGFloat = 300
             static let spacing: CGFloat = 10
             static let edgeSpacing: CGFloat = 10
+        }
+        
+        struct ShowFavoritesButton {
+            static let showsAllImage = UIImage(systemName: "heart.circle")
+            static let showsFavoritesImage = UIImage(systemName: "heart.circle.fill")
         }
         
     }
